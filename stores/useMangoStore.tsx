@@ -44,8 +44,11 @@ import { Wallet } from '@solana/wallet-adapter-react'
 export const ENDPOINTS: EndpointInfo[] = [
   {
     name: 'mainnet',
-    url: process.env.NEXT_PUBLIC_ENDPOINT || 'https://mango.rpcpool.com',
-    websocket: process.env.NEXT_PUBLIC_ENDPOINT || 'https://mango.rpcpool.com',
+    //url: process.env.NEXT_PUBLIC_ENDPOINT || 'https://mango.rpcpool.com',
+    //websocket: process.env.NEXT_PUBLIC_ENDPOINT || 'https://mango.rpcpool.com',
+    url: process.env.NEXT_PUBLIC_ENDPOINT || 'https://api.mainnet.solana.com',
+    websocket: process.env.NEXT_PUBLIC_ENDPOINT || 'https://api.mainnet.solana.com',
+    
     custom: false,
   },
   {
