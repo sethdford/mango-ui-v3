@@ -35,7 +35,7 @@ const SANCTIONED_COUNTRY_CODES = SANCTIONED_COUNTRIES.map(
   (country) => country[0]
 )
 
-const SPOT_ALLOWED = ['GB']
+const SPOT_ALLOWED = ['US']
 
 export default function useIpAddress() {
   const [ipAllowed, setIpAllowed] = useState(false)
@@ -43,16 +43,16 @@ export default function useIpAddress() {
 
   useEffect(() => {
     const checkIpLocation = async () => {
-      const response = await fetch(
-        `https://country-code.mangomarkets.workers.dev`
-      )
-      const parsedResponse = await response.json()
-      const ipCountryCode = parsedResponse ? parsedResponse?.country : ''
+      //const response = await fetch(
+      //  `https://country-code.mangomarkets.workers.dev`
+     // )
+     // const parsedResponse = await response.json()
+     // const ipCountryCode = parsedResponse ? parsedResponse?.country : ''
 
-      if (ipCountryCode) {
-        setIpAllowed(!SANCTIONED_COUNTRY_CODES.includes(ipCountryCode))
-        setSpotAllowed(SPOT_ALLOWED.includes(ipCountryCode))
-      }
+      //if (ipCountryCode) {
+        setIpAllowed(!SANCTIONED_COUNTRY_CODES.includes('US'))
+        setSpotAllowed(SPOT_ALLOWED.includes('US'))
+     // }
     }
 
     checkIpLocation()

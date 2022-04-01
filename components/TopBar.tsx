@@ -17,7 +17,7 @@ import {
   LightBulbIcon,
   UserAddIcon,
 } from '@heroicons/react/outline'
-import { MangoIcon } from './icons'
+
 import { useWallet } from '@solana/wallet-adapter-react'
 
 const StyledNewLabel = ({ children, ...props }) => (
@@ -103,24 +103,7 @@ const TopBar = () => {
                       true,
                       <LightBulbIcon className="h-4 w-4" key="learn" />,
                     ],
-                    [
-                      'Mango v2',
-                      'https://v2.mango.markets',
-                      true,
-                      <MangoIcon
-                        className="h-4 w-4 stroke-current"
-                        key="mango-v2"
-                      />,
-                    ],
-                    [
-                      'Mango v1',
-                      'https://v1.mango.markets',
-                      true,
-                      <MangoIcon
-                        className="h-4 w-4 stroke-current"
-                        key="mango-v1"
-                      />,
-                    ],
+                    
                   ]}
                 />
               </div>
