@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { CLUSTER } from '../stores/useMangoStore'
-
+/*
 const SANCTIONED_COUNTRIES = [
   ['AG', 'Antigua and Barbuda'],
   ['DZ', 'Algeria'],
@@ -30,12 +30,13 @@ const SANCTIONED_COUNTRIES = [
   ['ZW', 'Zimbabwe'],
   ['US', 'United States'],
 ]
+*/
 
-const SANCTIONED_COUNTRY_CODES = SANCTIONED_COUNTRIES.map(
-  (country) => country[0]
-)
+//const SANCTIONED_COUNTRY_CODES = SANCTIONED_COUNTRIES.map(
+//  (country) => country[0]
+//)
 
-const SPOT_ALLOWED = ['US']
+//const SPOT_ALLOWED = ['US']
 
 export default function useIpAddress() {
   const [ipAllowed, setIpAllowed] = useState(false)
@@ -50,9 +51,14 @@ export default function useIpAddress() {
      // const ipCountryCode = parsedResponse ? parsedResponse?.country : ''
 
       //if (ipCountryCode) {
-        setIpAllowed(!SANCTIONED_COUNTRY_CODES.includes('US'))
-        setSpotAllowed(SPOT_ALLOWED.includes('US'))
+      //  setIpAllowed(!SANCTIONED_COUNTRY_CODES.includes('US'))
+       // setSpotAllowed(SPOT_ALLOWED.includes('US'))
      // }
+     
+     
+        setIpAllowed(true)
+        setSpotAllowed(true)
+      
     }
 
     checkIpLocation()
