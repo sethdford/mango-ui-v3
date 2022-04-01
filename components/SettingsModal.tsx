@@ -34,7 +34,7 @@ const NODE_URLS = [
   { label: 'Custom', value: '' },
 ]
 
-const THEMES = ['Light', 'Dark', 'Mango']
+const THEMES = ['Light', 'Dark']
 
 export const LANGS = [
   { locale: 'en', name: 'english', description: 'english' },

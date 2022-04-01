@@ -153,7 +153,7 @@ const MoreMenuPanel = ({
         />
         <MoreMenuItem
           title={t('learn')}
-          path="https://docs.mango.markets/"
+          path="https://https://docs.powerstreetpro.com"
           icon={<LightBulbIcon className="h-5 w-5" />}
           isExternal
         />

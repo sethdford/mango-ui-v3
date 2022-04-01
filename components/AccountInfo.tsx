@@ -263,7 +263,7 @@ export default function AccountInfo() {
                   <div>
                     {t('tooltip-earn-mngo')}{' '}
                     <a
-                      href="https://docs.mango.markets/mango-v3/liquidity-incentives"
+                      href="https://docs.powerstreetpro.com/powerstreet/liquidity-incentives"
                       target="_blank"
                       rel="noopener noreferrer"
                     >
@@ -316,7 +316,7 @@ export default function AccountInfo() {
                     <div>
                       {t('tooltip-account-liquidated')}{' '}
                       <a
-                        href="https://docs.mango.markets/mango/health-overview"
+                        href="https://docs.powerstreetpro.com/powerstreet/health-overview"
                         target="_blank"
                         rel="noopener noreferrer"
                       >

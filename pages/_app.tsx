@@ -179,7 +179,7 @@ function App({ Component, pageProps }) {
           <FetchReferrer />
         </ErrorBoundary>
 
-        <ThemeProvider defaultTheme="Mango">
+        <ThemeProvider defaultTheme="Dark">
           <WalletProvider wallets={wallets}>
             <WalletListener />
             <ViewportProvider>

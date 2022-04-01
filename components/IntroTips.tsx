@@ -85,7 +85,7 @@ class IntroTips extends Component<Props, State> {
                 {this.props.t('perp-positions-tip-desc')}{' '}
                 <a
                   className="underline"
-                  href="https://docs.mango.markets/mango-v3/perp-faq#what-is-my-unsettled-pnl"
+                  href="https://docs.powerstreetpro.com/powerstreet/perp-faq#what-is-my-unsettled-pnl"
                   rel="noopener noreferrer"
                   target="_blank"
                 >
@@ -121,7 +121,7 @@ class IntroTips extends Component<Props, State> {
                 {this.props.t('collateral-available-tip-desc')}{' '}
                 <a
                   className="underline"
-                  href="https://docs.mango.markets/mango-v3/token-specs"
+                  href="https://docs.powerstreetpro.com/powerstreet/token-specs"
                   rel="noopener noreferrer"
                   target="_blank"
                 >
@@ -144,7 +144,7 @@ class IntroTips extends Component<Props, State> {
                 {this.props.t('account-health-tip-desc')}{' '}
                 <a
                   className="underline"
-                  href="https://docs.mango.markets/mango-v3/overview#health"
+                  href="https://docs.powerstreetpro.com/powerstreet/overview#health"
                   rel="noopener noreferrer"
                   target="_blank"
                 >

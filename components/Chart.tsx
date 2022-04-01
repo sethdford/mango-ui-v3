@@ -259,24 +259,24 @@ const Chart: FunctionComponent<ChartProps> = ({
             <linearGradient id="greenGradientBar" x1="0" y1="0" x2="0" y2="1">
               <stop
                 offset="0%"
-                stopColor={theme === 'Mango' ? '#AFD803' : '#5EBF4D'}
+                stopColor={theme === 'Blue' ? '#AFD803' : '#5EBF4D'}
                 stopOpacity={1}
               />
               <stop
                 offset="100%"
-                stopColor={theme === 'Mango' ? '#91B503' : '#4BA53B'}
+                stopColor={theme === 'Blue' ? '#91B503' : '#4BA53B'}
                 stopOpacity={1}
               />
             </linearGradient>
             <linearGradient id="redGradientBar" x1="0" y1="1" x2="0" y2="0">
               <stop
                 offset="0%"
-                stopColor={theme === 'Mango' ? '#F84638' : '#CC2929'}
+                stopColor={theme === 'Blue' ? '#F84638' : '#CC2929'}
                 stopOpacity={1}
               />
               <stop
                 offset="100%"
-                stopColor={theme === 'Mango' ? '#EC1809' : '#BB2525'}
+                stopColor={theme === 'Blue' ? '#EC1809' : '#BB2525'}
                 stopOpacity={1}
               />
             </linearGradient>

@@ -99,7 +99,7 @@ const TopBar = () => {
                     ],
                     [
                       t('learn'),
-                      'https://docs.mango.markets/',
+                      'https://docs.powerstreetpro.com',
                       true,
                       <LightBulbIcon className="h-4 w-4" key="learn" />,
                     ],

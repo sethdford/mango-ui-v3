@@ -182,7 +182,7 @@ export default function MarketPosition() {
       <div>
         {t('pnl-help')}{' '}
         <a
-          href="https://docs.mango.markets/mango/settle-pnl"
+          href="https://https://docs.powerstreetpro.com/powerstreet/settle-pnl"
           target="_blank"
           rel="noopener noreferrer"
         >

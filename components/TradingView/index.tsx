@@ -157,19 +157,19 @@ const TVChartContainer = () => {
         'mainSeriesProperties.candleStyle.drawWick': true,
         'mainSeriesProperties.candleStyle.drawBorder': true,
         'mainSeriesProperties.candleStyle.upColor':
-          theme === 'Mango' ? '#AFD803' : '#5EBF4D',
+          theme === 'Blue' ? '#AFD803' : '#5EBF4D',
         'mainSeriesProperties.candleStyle.downColor':
-          theme === 'Mango' ? '#E54033' : '#CC2929',
+          theme === 'Blue' ? '#E54033' : '#CC2929',
         'mainSeriesProperties.candleStyle.borderColor':
-          theme === 'Mango' ? '#AFD803' : '#5EBF4D',
+          theme === 'Blue' ? '#AFD803' : '#5EBF4D',
         'mainSeriesProperties.candleStyle.borderUpColor':
-          theme === 'Mango' ? '#AFD803' : '#5EBF4D',
+          theme === 'Blue' ? '#AFD803' : '#5EBF4D',
         'mainSeriesProperties.candleStyle.borderDownColor':
-          theme === 'Mango' ? '#E54033' : '#CC2929',
+          theme === 'Blue' ? '#E54033' : '#CC2929',
         'mainSeriesProperties.candleStyle.wickUpColor':
-          theme === 'Mango' ? '#AFD803' : '#5EBF4D',
+          theme === 'Blue' ? '#AFD803' : '#5EBF4D',
         'mainSeriesProperties.candleStyle.wickDownColor':
-          theme === 'Mango' ? '#E54033' : '#CC2929',
+          theme === 'Blue' ? '#E54033' : '#CC2929',
       },
     }
 
@@ -182,12 +182,12 @@ const TVChartContainer = () => {
       button.textContent = 'OL'
       if (showOrderLinesLocalStorage) {
         button.style.color =
-          theme === 'Dark' || theme === 'Mango'
+          theme === 'Dark' || theme === 'Blue'
             ? 'rgb(242, 201, 76)'
             : 'rgb(255, 156, 36)'
       } else {
         button.style.color =
-          theme === 'Dark' || theme === 'Mango'
+          theme === 'Dark' || theme === 'Blue'
             ? 'rgb(138, 138, 138)'
             : 'rgb(138, 138, 138)'
       }
@@ -204,12 +204,12 @@ const TVChartContainer = () => {
       this.style.color === 'rgb(242, 201, 76)'
     ) {
       this.style.color =
-        theme === 'Dark' || theme === 'Mango'
+        theme === 'Dark' || theme === 'Blue'
           ? 'rgb(138, 138, 138)'
           : 'rgb(138, 138, 138)'
     } else {
       this.style.color =
-        theme === 'Dark' || theme === 'Mango'
+        theme === 'Dark' || theme === 'Blue'
           ? 'rgb(242, 201, 76)'
           : 'rgb(255, 156, 36)'
     }
