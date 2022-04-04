@@ -520,7 +520,7 @@ const useMangoStore = create<
               } catch {
                 notify({
                   type: 'error',
-                  title: 'Failed to load the mango group. Please refresh.',
+                  title: 'Failed to load the powerstreetpro group. Please refresh.',
                 })
               }
 
@@ -591,11 +591,11 @@ const useMangoStore = create<
                 mangoGroupRetryAttempt++
               } else {
                 notify({
-                  title: 'Failed to load mango group. Please refresh',
+                  title: 'Failed to load powerstreetpro group. Please refresh',
                   description: `${err}`,
                   type: 'error',
                 })
-                console.log('Could not get mango group: ', err)
+                console.log('Could not get powerstreetpro group: ', err)
               }
             })
         },
