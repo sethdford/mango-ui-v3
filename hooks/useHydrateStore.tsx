@@ -109,7 +109,7 @@ const useHydrateStore = () => {
     })
   }, [marketConfig, markets, setMangoStore])
 
-  // watch selected Mango Account for changes
+  // watch selected Powerstreetpro Account for changes
   useEffect(() => {
     if (!mangoAccount) return
 

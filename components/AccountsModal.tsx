@@ -76,7 +76,7 @@ const AccountsModal: FunctionComponent<AccountsModalProps> = ({
         !showNewAccountForm ? (
           <>
             <Modal.Header>
-              <ElementTitle noMarginBottom>{t('mango-accounts')}</ElementTitle>
+              <ElementTitle noMarginBottom>{t('Powerstreetpro Accounts')}</ElementTitle>
             </Modal.Header>
             <div className="flex items-center justify-between pb-3 text-th-fgd-1">
               <div className="font-semibold">

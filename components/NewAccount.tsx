@@ -69,7 +69,7 @@ const NewAccount: FunctionComponent<NewAccountProps> = ({
         setSubmitting(false)
         onAccountCreation(response[0])
         notify({
-          title: 'Mango Account Created',
+          title: 'Powerstreetpro Account Created',
           txid: response[1],
         })
       })
