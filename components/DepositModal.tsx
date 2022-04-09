@@ -61,6 +61,7 @@ const DepositModal: FunctionComponent<DepositModalProps> = ({
 
   const handleDeposit = () => {
     const mangoAccount = useMangoStore.getState().selectedMangoAccount.current
+    if (!wallet) return
 
     setSubmitting(true)
     deposit({
@@ -81,7 +82,7 @@ const DepositModal: FunctionComponent<DepositModalProps> = ({
           mangoAccount
             ? actions.reloadMangoAccount()
             : actions.fetchAllMangoAccounts(wallet)
-          actions.fetchWalletTokens()
+          actions.fetchWalletTokens(wallet)
         })
       })
       .catch((err) => {
@@ -135,19 +136,25 @@ const DepositModal: FunctionComponent<DepositModalProps> = ({
     validateAmountInput(amount)
   }
 
-  const percentage = (parseFloat(inputAmount) / parseFloat(repayAmount)) * 100
-  const net = parseFloat(inputAmount) - parseFloat(repayAmount)
+  const percentage = repayAmount
+    ? (parseFloat(inputAmount) / parseFloat(repayAmount)) * 100
+    : null
+  const net = repayAmount
+    ? parseFloat(inputAmount) - parseFloat(repayAmount)
+    : null
   const repayMessage =
     percentage === 100
       ? t('repay-full')
-      : percentage > 100
+      : typeof percentage === 'number' && percentage > 100
       ? t('repay-and-deposit', {
           amount: trimDecimals(net, 6).toString(),
           symbol: selectedAccount.config.symbol,
         })
-      : t('repay-partial', {
+      : typeof percentage === 'number'
+      ? t('repay-partial', {
           percentage: percentage.toFixed(2),
         })
+      : ''
 
   const inputDisabled =
     selectedAccount &&
@@ -232,7 +239,7 @@ const DepositModal: FunctionComponent<DepositModalProps> = ({
           disabled={submitting || inputDisabled}
         >
           <div className={`flex items-center justify-center`}>
-            {submitting && <Loading className="-ml-1 mr-3" />}
+            {submitting ? <Loading className="-ml-1 mr-3" /> : null}
             {t('deposit')}
           </div>
         </Button>

@@ -22,25 +22,25 @@ export async function getStaticProps({ locale }) {
 export default function Swap() {
   const { t } = useTranslation(['common', 'swap'])
   const connection = useMangoStore(connectionSelector)
-  const { connected, publicKey } = useWallet()
+  const { connected, publicKey, wallet } = useWallet()
   const actions = useMangoStore(actionsSelector)
 
   useEffect(() => {
-    if (connected) {
-      actions.fetchWalletTokens()
+    if (wallet && connected) {
+      actions.fetchWalletTokens(wallet)
     }
-  }, [connected])
+  }, [connected, actions])
 
   if (!connection) return null
 
   const userPublicKey =
-    publicKey && !zeroKey.equals(publicKey) ? publicKey : null
+    publicKey && !zeroKey.equals(publicKey) ? publicKey : undefined
 
   return (
     <JupiterProvider
       connection={connection}
       cluster="mainnet-beta"
-      userPublicKey={connected ? userPublicKey : null}
+      userPublicKey={connected ? userPublicKey : undefined}
     >
       <div className={`bg-th-bkg-1 text-th-fgd-1 transition-all`}>
         <TopBar />

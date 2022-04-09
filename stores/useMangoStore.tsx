@@ -124,7 +124,7 @@ export interface Alert {
   triggeredTimestamp: number | undefined
 }
 
-interface AlertRequest {
+export interface AlertRequest {
   alertProvider: 'mail'
   health: number
   mangoGroupPk: string
@@ -159,7 +159,7 @@ export type MangoStore = {
     name: string
     current: MangoGroup | null
     markets: {
-      [address: string]: Market | PerpMarket
+      [address: string]: Market | PerpMarket | undefined
     }
     cache: MangoCache | null
   }
@@ -211,9 +211,22 @@ export type MangoStore = {
   }
   set: (x: (x: MangoStore) => void) => void
   actions: {
+    fetchWalletTokens: (wallet: Wallet) => void
+    fetchProfilePicture: (wallet: Wallet) => void
     fetchAllMangoAccounts: (wallet: Wallet) => Promise<void>
     fetchMangoGroup: () => Promise<void>
-    [key: string]: (args?) => void
+    fetchTradeHistory: () => void
+    reloadMangoAccount: () => void
+    reloadOrders: () => void
+    updateOpenOrders: () => void
+    loadMarketFills: () => void
+    loadReferralData: () => void
+    fetchMangoGroupCache: () => void
+    updateConnection: (url: string) => void
+    createAlert: (alert: AlertRequest) => void
+    deleteAlert: (id: string) => void
+    loadAlerts: (pk: PublicKey) => void
+    fetchMarketsInfo: () => void
   }
   alerts: {
     activeAlerts: Array<Alert>
@@ -254,6 +267,7 @@ const useMangoStore = create<
 
     const connection = new Connection(rpcUrl, 'processed' as Commitment)
     const client = new MangoClient(connection, programId, {
+      timeout: 45000,
       postSendTxCallback: ({ txid }: { txid: string }) => {
         notify({
           title: 'Transaction sent',
@@ -262,7 +276,7 @@ const useMangoStore = create<
           txid: txid,
         })
       },
-      maxStoredBlockhashes: CLUSTER === 'devnet' ? 1 : 3,
+      blockhashCommitment: 'finalized',
     })
     return {
       marketsInfo: [],
@@ -365,8 +379,8 @@ const useMangoStore = create<
                 connection,
                 wallet.adapter.publicKey
               )
-            const tokens = []
-            ownedTokenAccounts.forEach((account) => {
+            const tokens: any = []
+            ownedTokenAccounts?.forEach((account) => {
               const config = getTokenByMint(groupConfig, account.mint)
               if (config) {
                 const uiBalance = nativeToUi(account.amount, config.decimals)
@@ -557,11 +571,15 @@ const useMangoStore = create<
                 allMarketAccounts
               )
 
+              const currentSelectedMarket = allMarketAccounts.find((mkt) =>
+                mkt?.publicKey.equals(selectedMarketConfig.publicKey)
+              )
+
               set((state) => {
                 state.selectedMangoGroup.markets = allMarkets
-                state.selectedMarket.current = allMarketAccounts.find((mkt) =>
-                  mkt.publicKey.equals(selectedMarketConfig.publicKey)
-                )
+                state.selectedMarket.current = currentSelectedMarket
+                  ? currentSelectedMarket
+                  : null
 
                 allBidsAndAsksAccountInfos.forEach(
                   ({ publicKey, context, accountInfo }) => {
@@ -601,21 +619,20 @@ const useMangoStore = create<
               }
             })
         },
-        async fetchTradeHistory(mangoAccount = null) {
-          const selectedMangoAccount =
-            mangoAccount || get().selectedMangoAccount.current
+        async fetchTradeHistory() {
+          const selectedMangoAccount = get().selectedMangoAccount.current
           const set = get().set
           if (!selectedMangoAccount) return
 
           fetch(
-            `https://event-history-api.herokuapp.com/perp_trades/${selectedMangoAccount.publicKey.toString()}`
+            `https://trade-history-api-v3.onrender.com/perp_trades/${selectedMangoAccount.publicKey.toString()}`
           )
             .then((response) => response.json())
             .then((jsonPerpHistory) => {
               const perpHistory = jsonPerpHistory?.data || []
               if (perpHistory.length === 5000) {
                 fetch(
-                  `https://event-history-api.herokuapp.com/perp_trades/${selectedMangoAccount.publicKey.toString()}?page=2`
+                  `https://trade-history-api-v3.onrender.com/perp_trades/${selectedMangoAccount.publicKey.toString()}?page=2`
                 )
                   .then((response) => response.json())
                   .then((jsonPerpHistory) => {
@@ -646,7 +663,7 @@ const useMangoStore = create<
             Promise.all(
               publicKeys.map(async (pk) => {
                 const response = await fetch(
-                  `https://event-history-api.herokuapp.com/trades/open_orders/${pk.toString()}`
+                  `https://trade-history-api-v3.onrender.com/trades/open_orders/${pk.toString()}`
                 )
                 const parsedResponse = await response.json()
                 return parsedResponse?.data ? parsedResponse.data : []
@@ -670,6 +687,8 @@ const useMangoStore = create<
           const mangoAccount = get().selectedMangoAccount.current
           const connection = get().connection.current
           const mangoClient = get().connection.client
+
+          if (!mangoAccount) return
 
           const [reloadedMangoAccount, lastSlot] =
             await mangoAccount.reloadFromSlot(connection, mangoClient.lastSlot)
@@ -761,7 +780,10 @@ const useMangoStore = create<
         async loadReferralData() {
           const set = get().set
           const mangoAccount = get().selectedMangoAccount.current
-          const pk = mangoAccount.publicKey.toString()
+          const pk = mangoAccount?.publicKey.toString()
+          if (!pk) {
+            return
+          }
 
           const getData = async (type: 'history' | 'total') => {
             const res = await fetch(
@@ -796,7 +818,7 @@ const useMangoStore = create<
             }
           }
         },
-        async updateConnection(endpointUrl) {
+        updateConnection(endpointUrl) {
           const set = get().set
 
           const newConnection = new Connection(endpointUrl, 'processed')
@@ -828,6 +850,7 @@ const useMangoStore = create<
           const mangoAccount = get().selectedMangoAccount.current
           const mangoGroup = get().selectedMangoGroup.current
           const mangoCache = get().selectedMangoGroup.cache
+          if (!mangoGroup || !mangoAccount || !mangoCache) return
           const currentAccHealth = await mangoAccount.getHealthRatio(
             mangoGroup,
             mangoCache,
@@ -965,13 +988,21 @@ const useMangoStore = create<
         },
         async fetchMarketsInfo() {
           const set = get().set
-          const data = await fetch(
-            `https://mango-all-markets-api.herokuapp.com/markets/`
-          )
-          const parsedMarketsInfo = await data.json()
-          set((state) => {
-            state.marketsInfo = parsedMarketsInfo
-          })
+          try {
+            const data = await fetch(
+              `https://mango-all-markets-api.herokuapp.com/markets/`
+            )
+
+            if (data?.status === 200) {
+              const parsedMarketsInfo = await data.json()
+
+              set((state) => {
+                state.marketsInfo = parsedMarketsInfo
+              })
+            }
+          } catch (e) {
+            console.log('ERORR: Unable to load all market info')
+          }
         },
       },
     }

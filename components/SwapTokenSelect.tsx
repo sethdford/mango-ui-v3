@@ -86,7 +86,7 @@ const SwapTokenSelect = ({
   useEffect(() => {
     function onEscape(e) {
       if (e.keyCode === 27) {
-        onClose()
+        onClose?.()
       }
     }
     window.addEventListener('keydown', onEscape)
@@ -94,9 +94,13 @@ const SwapTokenSelect = ({
   }, [])
 
   const tokenInfos = useMemo(() => {
-    return sortedTokenMints.filter((token) => {
-      return !token?.name || !token?.symbol ? false : true
-    })
+    if (sortedTokenMints?.length) {
+      return sortedTokenMints.filter((token) => {
+        return !token?.name || !token?.symbol ? false : true
+      })
+    } else {
+      return []
+    }
   }, [sortedTokenMints])
 
   const handleUpdateSearch = (e) => {
